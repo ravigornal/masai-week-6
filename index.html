@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <nav class="navbar navbar-dark" style="background-color: #e0c2d3";>
+            <a class="navbar-brand" href="#">
+                <img src="logo.svg" width="100" height="100" alt="">
+            </a>
+        </nav>
+        
+        <div class = "allContainer">
+            <div class = "displayContainer" >
+                <h1 style="color: black ;text-align: center;">HUMAN RESOURCE MANAGEMENT SYSTEM</h1>
+        </div>
+            
+    <hr>
+    <div class = "paraContainer"> </div>    
+
+            <!-- <h1> Create new person objects </h1> -->
+            <div class = "form-group offset-4">
+                <div>
+                    <!-- //<label for = "name">Name</label> -->
+                    <input type="text" name = "name" class = "personInput form-control col-4 mt-2" placeholder="Name"/>
+                </div>
+              
+                <div class = " ">
+                    <!-- //<label for = "age">Age</label> -->
+                    <input type="text" name = "Age" class = "personInput form-control col-4 mt-2" placeholder="Age"/>
+                </div>
+              
+                <div class = "">
+                    <!-- //<label for = "email">email</label> -->
+                    <input type="text" name = "email" class = "personInput form-control col-4 mt-2" placeholder="Email"/>
+                </div>
+              
+                <div class = "">
+                    <!-- //<label for = "phone">phone</label> -->
+                    <input type="text" name = "phone" class = "personInput form-control col-4 mt-2" placeholder="Phone"/>
+                </div>
+             
+                <div class = " "> 
+                    <!-- //<label for = "name">skills (Comma separated!</label> -->
+                    <input type="text" name = "name" class = "personInput form-control col-4 mt-2" placeholder="Skills"/>
+                </div>
+             
+                <div class = " ">
+                    <!-- //<label for = "submit">Submit Information:</label> -->
+                    <button name = "submit" id = 'submitBtn' class="btn btn-dark offset-3 mt-2">Submit</button>
+                </div>
+             
+        
+              <!-- <label for = "displayPeople">Display All People</label> -->
+              <button name = "displayPeople" class="btn btn-dark offset-2 mt-2" id = 'displayBtn'>Display All Poeple</button>
+            </div>
+          </div>
+
+          <!-- <nav class="navbar bottom navbar-light bg-dark">
+                <a class="navbar-brand" href="#">Alright Reserved</a>
+              </nav> -->
+        </body>
+        </html>
+    <script>
+
+
+        function Person(name, age, email, phone, skills){
+            this.name = name;
+            this.age = age;
+            this.email = email;
+            this.phone = phone;
+            this.skills = skills;
+            // This function returns a string with all the properties of the object
+            this.getDetails = function(){
+                var output = ''
+                for(key in this){
+                output += key + ":" + this[key] + "\n"
+                if(key == 'skills') break;
+                }
+                return output // Output is a string!
+            }
+        }
+
+        var personArr = [] // This array contains all the Person Objects!
+
+        //This is the function that creates a person object and pushes that object into the personArr
+        function createPerson(){
+        var inputs = document.querySelectorAll('.personInput') // This will return an array of all the input objects with the class = "personInput"
+        var newPerson = new Person()// This creates an empty Person() object
+        var i = 0 //This is a counter for each of the input boxes
+        for(key in newPerson){
+            if(newPerson[key] == undefined){ //This checks if the key has an undefined value
+            if(key != 'skills')  {
+                newPerson[key] = inputs[i].value // This adds value to the empty Person object
+            }
+            else {
+                newPerson[key] = inputs[i].value.split(',')
+            }
+            inputs[i].value = '' // Reset all the input values to empty string
+            i++
+            }
+        }
+        personArr.push(newPerson) // Add the new person to the array
+        }
+        //This function displays all the Person objects in the personArr
+        function displayAll(){
+        var displayContainer = document.querySelector('.paraContainer') 
+        displayContainer.innerHTML = ''
+        for(var i = 0; i < personArr.length;i++){ // Here we loop through all the objects in the personArr
+            var displayPara = document.createElement('p') // We create a new p tag
+            displayPara.textContent = personArr[i].getDetails() // We call the getDeatils function for each object get a string and set the p tags innertext to the returned string
+            displayContainer.appendChild(displayPara) //Append the new p tag to the displayContainer
+        }
+        }
+
+        var submitBtn = document.querySelector('#submitBtn')
+        submitBtn.addEventListener('click', createPerson) // This is the listener for the submit button
+
+        var displayBtn = document.querySelector('#displayBtn')
+        displayBtn.addEventListener('click',displayAll) // This is the listener for the display all people button
+
+        //Code for a person constructor below!
+
+
+
+    </script>
+</body>
+</html>
